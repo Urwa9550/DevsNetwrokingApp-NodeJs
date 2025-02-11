@@ -14,33 +14,40 @@
  const express = require('express');
  const app = express();
 
+ // advance routing techniques -> ( _?, _+, _*_ )it will work for request /ac as well as /abc ( Now 'b' is optional over here)
+ //route handler / controller
+ app.get('/user/:userId/:name/:password', (req, res)=>{
+    // console.log(req.query);
+    console.log(req.params);
+     res.send({firstName: 'Urwa', lastName: 'Ali'});
+    })
 // this will only handle GET call to '/user'
-app.get('/user', (req, res)=>{
-    res.send({firstName: 'Urwa', lastName: 'Ali'});
-})
-app.post('/user', (req, res)=>{
-    res.send({msg:"Data saved successfully", success: true});
-})
-app.delete('/user', (req, res)=>{
-    res.send({msg:"Data Deleted successfully", success: true});
-})
+// app.get('/ab?c', (req, res)=>{
+//     res.send({firstName: 'Urwa', lastName: 'Ali'});
+// })
+// app.post('/user', (req, res)=>{
+//     res.send({msg:"Data saved successfully", success: true});
+// })
+// app.delete('/user', (req, res)=>{
+//     res.send({msg:"Data Deleted successfully", success: true});
+// })
 
-//this is our request handler
-// this will match all the http method appi calls to '/test'
- app.use("/test",(req, res)=>{
-res.send("Hello from the server!")
- })
+// //this is our request handler
+// // this will match all the http method appi calls to '/test'
+//  app.use("/test",(req, res)=>{
+// res.send("Hello from the server!")
+//  })
 
- app.use("/hello/2",(req, res)=>{
-res.send("Cheem dabaak dum dummm!")
- })
- app.use("/hello",(req, res)=>{
-res.send("Hello helloo helloo from the server!")
- })
+//  app.use("/hello/2",(req, res)=>{
+// res.send("Cheem dabaak dum dummm!")
+//  })
+//  app.use("/hello",(req, res)=>{
+// res.send("Hello helloo helloo from the server!")
+//  })
 
- app.use("/",(req, res)=>{
-res.send("Only Slash! Welcome to root!")
- })
+//  app.use("/",(req, res)=>{
+// res.send("Only Slash! Welcome to root!")
+//  })
 
  app.listen(3000, ()=>{
     console.log("Server is succeessfully listening on port 3000")

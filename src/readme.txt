@@ -39,3 +39,16 @@
 
 ### Order of writing the routes Matter Alot!!
 
+## advance routing techniques -> ( _?, _+, _*_ )it will work for request /ac as well as /abc ( Now 'b' is optional over here)
+ app.get('/ab?c') // here 'b' is optional
+ app.get('/ab+c') // here 'b' can repeat many times eg: /abbbbbbc the request will be successfull
+ app.get('/ab*c') // here anything can come between 'ab' & 'c', should start with 'ab' and end with 'c' eg: /abdddfffgggzzzc or /ab-----c the request will be successfull
+ app.get('/a(bd)?c') // here bd is optional eg: /ac and /abdc both will work
+
+ app.get('/user?userId=101') // eg: [req.query]
+ app.get('/user/:userId') // ':' or 'colon' means its a dnamic route eg: app.get('/user/101')
+ app.get('/user/:userId/:name/:password') // ':' or 'colon' means its a dnamic route eg: app.get('/user/101/Alan/test111') [req.params]
+
+## read use of regex in routes /a/ , /.*fly$/
+## read query, params in routes
+## Read the dynammic routes
