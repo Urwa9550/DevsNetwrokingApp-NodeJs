@@ -14,13 +14,32 @@
  const express = require('express');
  const app = express();
 
+// this will only handle GET call to '/user'
+app.get('/user', (req, res)=>{
+    res.send({firstName: 'Urwa', lastName: 'Ali'});
+})
+app.post('/user', (req, res)=>{
+    res.send({msg:"Data saved successfully", success: true});
+})
+app.delete('/user', (req, res)=>{
+    res.send({msg:"Data Deleted successfully", success: true});
+})
+
 //this is our request handler
+// this will match all the http method appi calls to '/test'
  app.use("/test",(req, res)=>{
 res.send("Hello from the server!")
  })
 
+ app.use("/hello/2",(req, res)=>{
+res.send("Cheem dabaak dum dummm!")
+ })
  app.use("/hello",(req, res)=>{
 res.send("Hello helloo helloo from the server!")
+ })
+
+ app.use("/",(req, res)=>{
+res.send("Only Slash! Welcome to root!")
  })
 
  app.listen(3000, ()=>{
