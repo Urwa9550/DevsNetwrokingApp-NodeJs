@@ -14,13 +14,24 @@
  const express = require('express');
  const app = express();
 
+ const {adminAuth} = require('./middlewares/auth.js');
+
+app.use('/admin', adminAuth);
+app.get('/admin/getAllData', (req, res)=>{
+res.send("Get All data");
+});
+
+app.post('/user/login', (req, res)=>{
+    res.send("User logged in successfully");
+    });
+
  // advance routing techniques -> ( _?, _+, _*_ )it will work for request /ac as well as /abc ( Now 'b' is optional over here)
  //route handler / controller
- app.get('/user/:userId/:name/:password', (req, res)=>{
-    // console.log(req.query);
-    console.log(req.params);
-     res.send({firstName: 'Urwa', lastName: 'Ali'});
-    })
+//  app.get('/user/:userId/:name/:password', (req, res)=>{
+//     // console.log(req.query);
+//     console.log(req.params);
+//      res.send({firstName: 'Urwa', lastName: 'Ali'});
+//     })
 // this will only handle GET call to '/user'
 // app.get('/ab?c', (req, res)=>{
 //     res.send({firstName: 'Urwa', lastName: 'Ali'});
@@ -34,6 +45,18 @@
 
 // //this is our request handler
 // // this will match all the http method appi calls to '/test'
+//  app.use(
+//     "/user",
+//     (req, res, next)=>{
+//     console.log("Hello from the server!")
+//     // res.send("Hello from the server!")
+//     next()
+//     }, 
+//     (req, res)=>{
+//      console.log("Hello from the 2nd server!")
+//     res.send("Hello from the server! 2")
+//      }
+// )
 //  app.use("/test",(req, res)=>{
 // res.send("Hello from the server!")
 //  })

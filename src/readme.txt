@@ -52,3 +52,19 @@
 ## read use of regex in routes /a/ , /.*fly$/
 ## read query, params in routes
 ## Read the dynammic routes
+
+# we can write as many callbacks as needed
+# app.use(
+    "/user",
+    (req, res, next)=>{
+    console.log("Hello from the server!");
+    // res.send("Hello from the server!");
+    next();
+    }, 
+    (req, res)=>{
+     console.log("Hello from the 2nd server!");
+    res.send("Hello from the server! 2");
+     }
+)
+
+#
