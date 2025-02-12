@@ -14,16 +14,21 @@
  const express = require('express');
  const app = express();
 
- const {adminAuth} = require('./middlewares/auth.js');
+ const {adminAuth} = require('./middlewares/auth');
 
-app.use('/admin', adminAuth);
-app.get('/admin/getAllData', (req, res)=>{
+// app.use('/admin', adminAuth);
+// app.get('/admin/getAllData', (req, res)=>{
+// res.send("Get All data");
+// });
+
+app.get('/getAllData', (req, res)=>{
+    // logic of DB call and get user data 
 res.send("Get All data");
 });
 
-app.post('/user/login', (req, res)=>{
-    res.send("User logged in successfully");
-    });
+// app.post('/user/login', (req, res)=>{
+//     res.send("User logged in successfully");
+//     });
 
  // advance routing techniques -> ( _?, _+, _*_ )it will work for request /ac as well as /abc ( Now 'b' is optional over here)
  //route handler / controller

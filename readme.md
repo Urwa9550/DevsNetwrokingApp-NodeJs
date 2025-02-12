@@ -169,3 +169,31 @@ res.status(401).send({message: "Unauthorized request"});
 });
 
 # "/admin" route will only be called for "/admin" middleswarees / route handlers eg: "/admin", "/admin/getAllUsers" etc
+
+##~~~~~~~~~~~~~~~~~~ Error handling ~~~~~~~~~~~~~~~~~~
+# if 4 parameters, first param will be treated as error
+
+app.use('/getAllData', (err, req, res, next)=>{
+    // logic of DB call and get user data 
+<!-- res.send("Get All data"); -->
+
+if(err){
+    // here we should also log error ( so that I should also be notified) eg: in santry, or a logging service e.t.c.
+
+    res.status(500).send("Something went wrong.")
+}
+});
+
+app.use('/getAllData', (err, req, res, next)=>{
+    //wild card error handling
+    // make sure to add this only at the end of other route handlers, so that if anything breaks, u ccan caught it over here 
+    // always use try and catcch 
+    try{
+      /**  throw new Error("Error xyz"); // on this line an error will occur due to which catch block will run */
+        res.send("user data sent"); // thiis line will not execute bcz of the above throw new Error() line
+
+    }catch(err){
+        res.status(500).send("Internal Server Error");
+    }
+});
+
