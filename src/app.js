@@ -17,18 +17,36 @@
  const app = express();
 
  const {adminAuth} = require('./middlewares/auth');
-
+ app.use(express.json()) // now my middleware is activated for all the routes (rh)
  // create a user - post - "/signup"
  app.post("/signup", async (req, res)=> {
-   const user = new User({
-      firstName: "Urwa",
-      lastName: "Ali",
-      emailId: "urwa0@gmail.com",
-      password: "test1122",
-   });
+   /**
+    * if send raw data via Post body ( in json format ) it will give undefined on the server 
+    * whyy it gives undefined, cz the data is in json format and our server is not able to read that json data
+    * to read that json data we will need help of a middleware ( we need to use it for all of our apis ) 
+    * 
+    * Middleware can read that json, convert it into the javascript object, put is into the body and give us access to that data 
+    * over here : req.body
+    * 
+    * there is a middleware given to us by express i.e express.json
+    * app.use(express.json()) // now my middleware is activated for all the routes (rh)
+    */
+   // creating a new instance of user model - dynamic api way 
+   console.log(req.body.firstName);
+   const user = new User(req.body);
+   // creating a new instance of user model - hardcore api way 
+   // const user = new User({
+   //    firstName: "Uzma",
+   //    lastName: "Alam",
+   //    emailId: "uzma0@gmail.com",
+   //    password: "test1122",
+   // });
+   const name = req.body.firstName;
 try {
    await user.save();
-   res.send({success: true, message: "User added successfully."})
+   res.send({success: true, message: "User added successfully.",
+       firstName: name
+      })
 } catch (error) {
    res.status(400).send({success: false, message: ''+ error})
 }

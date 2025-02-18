@@ -215,6 +215,7 @@ call the cconnectDB function and connect to database before starting application
 
 
 ## ~~~~~~~~~~~~~~~~~~MongoDB Atlas~~~~~~~~~~~~~~~~~~
+# got some tls/ssl error, use below steps to resolve it 
 # login to MongoDB Atlas -> Go to Network Access -> Edit -> connect Ip Anywhere
 
 ## ~~~~~~~~~~~~~~~~~~Mongoose ~~~~~~~~~~~~~~~~~~
@@ -309,5 +310,34 @@ res.send("Get All data");
 //  app.use("/",(req, res)=>{
 // res.send("Only Slash! Welcome to root!")
 //  })
+
+
+/**
+    * if send raw data via postman in a Post body ( in json format ) it will give undefined on the server 
+    * whyy it gives undefined, cz the data is in json format and our server is not able to read that json data
+    * to read that json data we will need help of a middleware ( we need to use it for all of our apis ) 
+    * 
+    * Middleware can read that json, convert it into the javascript object, put is into the body and give us access to that data 
+    * over here : req.body
+    * 
+    * there is a middleware given to us by express i.e express.json
+    * app.use(express.json()) // now my middleware is activated for all the routes (rh)
+    */
+
+##// create a user - post - "/signup"
+ app.post("/signup", async (req, res)=> {
+   // creating a new instance of user model - hard-core data 
+   const user = new User({
+      firstName: "Uzma",
+      lastName: "Alam",
+      emailId: "uzma0@gmail.com",
+      password: "test1122",
+   });
+try {
+   await user.save();
+   res.send({success: true, message: "User added successfully."})
+} catch (error) {
+   res.status(400).send({success: false, message: ''+ error})
+}
 
 ~~~~~~~~~~~~~~~~~~ ~~~~~~~~~~~~~~~~~~ ~~~~~~~~~~~~~~~~~~
