@@ -52,6 +52,126 @@ try {
 }
  })
 
+// get user by email
+// app.get("/user", async (req,res)=> {}))
+app.get("/userbyemail", async (req,res)=> {
+   const userEmail = req.body.emailId;
+try {
+   const users = await User.find({ emailId: userEmail });
+   if( users.length === 0){
+      
+      res.status(400).send({success: false, message: 'User not found.'});
+   }
+   
+   res.send(users);
+   
+} catch (error) {
+   res.status(400).send({success: false, message: ''+ error});
+}
+
+});
+
+// get One user by email
+// app.get("/user", async (req,res)=> {}))
+app.get("/oneuserbyemail", async (req,res)=> {
+   const userEmail = req.body.emailId;
+try {
+   const users = await User.findOne({ emailId: userEmail });
+   if(!users){
+      
+      res.status(404).send({success: false, message: 'User not found.'});
+   }else{
+
+      res.send(users);
+   }
+   
+   
+} catch (error) {
+   res.status(400).send({success: false, message: ''+ error});
+}
+
+});
+
+
+// feed api - GET /feed - get all the users from the database
+ app.get("/feed", async (req, res)=> {
+try {
+   const users = await User.find({}); // it will get u all the documents from your collection
+
+   res.send(users);
+} catch (error) {
+   res.status(400).send({success: false, message: ''+ error});
+
+}
+ });
+
+// Read PATCH from the ongoose document
+ // patch user api - PATCH /user - update a user in the database
+//---- fetch userID from request body---- 
+//  app.patch("/user", async (req, res)=> {
+   //    const userId = req.body.userId;
+   //---- fetch userID from params ---- 
+ app.patch("/user/:userId", async (req, res)=> {
+   const userId = req.params?.userId;
+   // const user = new User(req.body);
+   const user = req.body;
+   console.log(req.body)
+
+   const ALLOWED_UPDATES = [
+      "photoUrl", "about", "gender", "age", "lastName", "skills"
+   ]
+
+   
+
+   // requestbody raw { userId: "jjsdhjsdhjsdhjsd1w3233"}
+
+   try {
+      const isUpdateAllowed = Object.keys(user).every((k)=>{
+         ALLOWED_UPDATES.includes(MediaKeyMessageEvent)
+      })
+   
+      if(!isUpdateAllowed){
+
+         throw new Error("Update not allowed in keys.")
+         // res.status(400).send({success: false, message: "Update not allowed."})
+      }
+      
+      if(user?.skills.length > 10){
+         throw new Error("SKills length must not exceed 10");
+
+      }
+      // const usersDel = await User.findByIdAndDelete({_id: userId}); // it will get u all the documents from your collection ( it works )
+      // const userUpdated = await User.findByIdAndUpdate({_id: userId}, user); // it will get u all the documents from your collection ( it works as well )
+      // const userUpdatedBefore = await User.findByIdAndUpdate( userId, user); // it will get u all the documents from your collection ( it works as well )
+      const userUpdatedAfter = await User.findByIdAndUpdate( userId, user, {returnDocument: 'after', runValidators: true}); // it will get u all the documents from your collection ( it works as well )
+      if(!userUpdatedAfter){
+         res.status(404).send({success: false, message: 'User not found.'});
+      }else{
+      res.send({success: true, message: "User updated.", user: userUpdatedAfter });
+      }
+   } catch (error) {
+      res.status(400).send({success: false, message: 'Update Failed: '+ error});
+   
+   }
+    });
+
+ // delete user api - DELETE /user - delete a user from the database
+ app.delete("/user", async (req, res)=> {
+   const userId = req.body.userId;
+
+   // requestbody raw { userId: "jjsdhjsdhjsdhjsd1w3233"}
+
+   try {
+      // const usersDel = await User.findByIdAndDelete({_id: userId}); // it will get u all the documents from your collection ( it works )
+      const usersDel = await User.findByIdAndDelete(userId); // it will get u all the documents from your collection ( it works as well )
+   
+      res.send({success: true, message: "User deleted."});
+   } catch (error) {
+      res.status(400).send({success: false, message: ''+ error});
+   
+   }
+    });
+
  connectDB().then(()=> {
    console.log("Database connection established...")
 

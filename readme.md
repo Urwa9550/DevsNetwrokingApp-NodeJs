@@ -247,9 +247,19 @@ Push some documents using API calls from postman
 
 Error handling using try, catch eg: while saviing data or sending response back 
 
+## ~~~~~ S02E08 Practice data sanitization & data validation 24feb2025 ~~~~~
+- explore schema typee options from the mongoose documention 
+- Add required, unique, lowercase, min, minLength, trim
+- Add default
+- create a custom validation function for gender
+- improve the db schema - put appropriate validations on each field in schema
+- Add time stamps to user schema
+- what to do if I dont want the user to change the emailId once created
+-install and explore validator
+- validation for password, email 
+- Never trust req.body 
 
-
-## ~~~~~~~~~~~~~~~~~~Practice ~~~~~~~~~~~~~~~~~~
+## ~~~~~~~~~~~~~~~~~~ Practice ~~~~~~~~~~~~~~~~~~
 // app.use('/admin', adminAuth);
 // app.get('/admin/getAllData', (req, res)=>{
 // res.send("Get All data");
@@ -323,7 +333,7 @@ res.send("Get All data");
     * there is a middleware given to us by express i.e express.json
     * app.use(express.json()) // now my middleware is activated for all the routes (rh)
     */
-
+# if a key is not in the schema it will not be added to the database
 ##// create a user - post - "/signup"
  app.post("/signup", async (req, res)=> {
    // creating a new instance of user model - hard-core data 
