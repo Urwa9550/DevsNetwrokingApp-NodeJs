@@ -45,8 +45,8 @@
  app.get('/a(bd)?c') // here bd is optional eg: /ac and /abdc both will work
 
  app.get('/user?userId=101') // eg: [req.query]
- app.get('/user/:userId') // ':' or 'colon' means its a dnamic route eg: app.get('/user/101')
- app.get('/user/:userId/:name/:password') // ':' or 'colon' means its a dnamic route eg: app.get('/user/101/Alan/test111') [req.params]
+ app.get('/user/:userId') // ':' or 'colon' means its a dynamic route eg: app.get('/user/101')
+ app.get('/user/:userId/:name/:password') // ':' or 'colon' means its a dynamic route eg: app.get('/user/101/Alan/test111') [req.params]
 
 ## read use of regex in routes /a/ , /.*fly$/
 ## read query, params in routes
@@ -90,7 +90,7 @@ console.log("Hello from the server 2!");
     // res.send("Hello from the server!");
     })
 
-## ~~~~~~~~~  route handlers and mmiddleware  ~~~~~~~~~
+## ~~~~~~~~~  route handlers and middleware  ~~~~~~~~~
 # they are called middlewares bcz they are called in the middle of the request chain  ( method chain )
 app.get(
     "/", (req, res, next())=>{
@@ -123,13 +123,13 @@ app.use(
 # Generally mmiddlewares are written using app.use()
 # but there are no specific rules to write middlewares 
 # Read what is middleware 
-# How express Js basically handles the request beehind the scene?
-# why do we need mmiddle wares
+# How express Js basically handles the request behind the scene?
+# why do we need middlewares
 ~~~~~~~~~~~~~~~~~~ ~~~~~~~~~~~~~~~~~~
 
 # Read HTTP status codes 
 
-# Handle Auth middleware fo all request GET, POST, PUT, Delete
+# Handle Auth middleware for all request GET, POST, PUT, Delete
 app.use("/admin", (req, res, next)=>{
 const token = "abshbhfjhjfhjdfh"
 const isAdminAuthorized = token === "xyz"
@@ -184,11 +184,11 @@ if(err){
 
 app.use('/getAllData', (err, req, res, next)=>{
     //wild card error handling
-    // make sure to add this only at the end of other route handlers, so that if anything breaks, u ccan caught it over here 
-    // always use try and catcch 
+    // make sure to add this only at the end of other route handlers, so that if anything breaks, u can caught it over here 
+    // always use try and catch 
     try{
       /**  throw new Error("Error xyz"); // on this line an error will occur due to which catch block will run */
-        res.send("user data sent"); // thiis line will not execute bcz of the above throw new Error() line
+        res.send("user data sent"); // this line will not execute bcz of the above throw new Error() line
 
     }catch(err){
         res.status(500).send("Internal Server Error");
@@ -231,11 +231,11 @@ call the cconnectDB function and connect to database before starting application
 
 
 ## ~~~~~~~~~~~~~~~~~~Practice ~~~~~~~~~~~~~~~~~~
-- Create a free cluster on MongoDB official website (Hongo Atlas)
+- Create a free cluster on MongoDB official website (Mongo Atlas)
 
 Install mongoose Library
 
-Connect your application to the Batabase "Connection-url"/devTinder
+Connect your application to the Database "Connection-url"/devTinder
 
 Call the connectDB function and connect to database before starting application on 7777
 
@@ -248,16 +248,16 @@ Push some documents using API calls from postman
 Error handling using try, catch eg: while saviing data or sending response back 
 
 ## ~~~~~ S02E08 Practice data sanitization & data validation 24feb2025 ~~~~~
-- explore schema typee options from the mongoose documention 
+- explore schema type options from the mongoose documention 
 - Add required, unique, lowercase, min, minLength, trim
 - Add default
 - create a custom validation function for gender
 - improve the db schema - put appropriate validations on each field in schema
 - Add time stamps to user schema
 - what to do if I dont want the user to change the emailId once created
--install and explore validator
+- install and explore validator
 - validation for password, email 
-- Never trust req.body 
+- .......Never trust req.body....... 
 
 ## ~~~~~~~~~~~~~~~~~~ Practice ~~~~~~~~~~~~~~~~~~
 // app.use('/admin', adminAuth);
@@ -327,7 +327,7 @@ res.send("Get All data");
     * whyy it gives undefined, cz the data is in json format and our server is not able to read that json data
     * to read that json data we will need help of a middleware ( we need to use it for all of our apis ) 
     * 
-    * Middleware can read that json, convert it into the javascript object, put is into the body and give us access to that data 
+    * Middleware can read that json, convert it into the javascript object, put it into the body and give us access to that data 
     * over here : req.body
     * 
     * there is a middleware given to us by express i.e express.json

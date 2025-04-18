@@ -22,10 +22,19 @@
 # npm install -g nodemon --> when u save the file, automatically refresh the server
 # npm run dev -> dev cmd will run with nodemon
 
+##~~~~~~~~~ Season 0209 ~~~~~~~~~
+#password should be save as hash in database 
+- for a request body first validate it, then encrypt the password,
+- validate data in signup api 
+- install bcrypt package 
+- cerate passwordHash using bcrypt.has ftn and save ther user with encrypted password
+------ lets create a login api -------
+
+
 ~~~~~~~~~ Home work ~~~~~~~~~
 - create a repo
 - Init a repo
-- what are node_modules, package.json, packagee-lock.json
+- what are node_modules, package.json, package-lock.json
 - Install express
 - create a server
 - listen to port 5000

@@ -2,13 +2,13 @@ const mongoose = require("mongoose");
 var validator = require('validator');
 
 const { Schema } = mongoose;
-
+// ----- model level validation ----
 const userSchema = new Schema({
     firstName: {
         type: String,
         required: true,
         trim: true,
-        minLength: 3, // for String use 'minLength' & for a Number user 'min'
+        minLength: 3, // for type as String use 'minLength' & for a Number use 'min'
     },
     lastName: {
         type: String,
@@ -34,7 +34,7 @@ const userSchema = new Schema({
         minLength: 6,
         validate(value){
             if(!validator.isStrongPassword(value)){
-                throw new Error("Enter a strong password ");
+                throw new Error("Entered a strong password ");
             }
         }
     },
